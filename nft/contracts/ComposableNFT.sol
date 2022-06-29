@@ -15,7 +15,7 @@ contract ComposableNFT is ERC721Enumerable {
     Counters.Counter private _tokenIds;
     address private sourceDir;
     mapping(uint256 => bool) composeIdUsed;
-    mapping(uint256 => uint256) tokenIdIndex;
+    mapping(string => uint256) tokenIdIndex;
     uint256 traitSize;
     uint256 valueSize;
     uint256 sampleSpace;
@@ -39,12 +39,17 @@ contract ComposableNFT is ERC721Enumerable {
         _mint(receiver, newItemId);
         uint256 composeId = genId(receiver, newItemId);
         composeIdUsed[composeId] = true;
-        tokenIdIndex[newItemId] = composeId;
+        tokenIdIndex[newItemId.toString()] = composeId;
         _tokenIds.increment();
         return newItemId;
     }
+    
+    function compose(string memory tokenIdSvg) public view returns (bytes memory) {
+        string memory tokenId = trimSuffix(tokenIdSvg);
+        return _compose(tokenId);
+    }
 
-    function compose(uint256 tokenId) public view returns (bytes memory) {
+    function _compose(string memory tokenId) internal view returns (bytes memory) {
         uint256 composeId = tokenIdIndex[tokenId];
         require(composeId > 0, "invalid token ID");
         IW3RC3 w3q = IW3RC3(sourceDir);
@@ -104,5 +109,15 @@ contract ComposableNFT is ERC721Enumerable {
                 sampleSpace;
         }
         return composeId;
+    }
+
+    function trimSuffix(string memory tokenIdSvg) public pure returns (string memory) {
+        bytes memory srcBytes = bytes(tokenIdSvg);
+        uint256 endIndex = srcBytes.length - 4;
+        bytes memory idBytes = new bytes(endIndex);
+        for(uint256 i = 0; i < endIndex; i++) {
+            idBytes[i] = srcBytes[i];
+        }
+        return string(idBytes);
     }
 }

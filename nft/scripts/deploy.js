@@ -10,7 +10,7 @@ async function main() {
     let tx, receipt;
     //deploy contract
     const nft = await ethers.getContractFactory("ComposableNFT");
-    const myNFT = await nft.deploy("Web3Q Early Supporter", "WES", pngDir, 7, 10);;
+    const myNFT = await nft.deploy("Web3Q Early Supporter", "WES", pngDir, 7, 10);
     await myNFT.deployed();
     console.log("ComposableNFT deployed to:", myNFT.address);
 
@@ -34,14 +34,12 @@ async function mint() {
 
 async function test() {
     const nft = await ethers.getContractFactory("ComposableNFT");
-    const myNFT = nft.attach("0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"); //attach to a deployed NFT contract
-    let rs = await myNFT.isComposeIdUsed(1950275);
-    console.log(rs)
-    rs = await myNFT.isComposeIdUsed(1950278);
+    const myNFT = nft.attach("0x855f0369B9721061ec8Ce66aE6Eb02E92442663b"); //attach to a deployed NFT contract
+    let rs = await myNFT.compose("0.svg");
     console.log(rs)
 }
 
-main()
+test()
     .then(() => process.exit(0))
     .catch((error) => {
         console.error(error);

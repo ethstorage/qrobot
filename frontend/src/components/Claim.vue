@@ -3,10 +3,10 @@
     <div class="middle">
       <div class="card-wrapper">
         <div class="box">
-          <div class="last-panel" v-for="(id, index) in myTokenIds" :key="id">
+          <div class="last-panel" v-for="id in myTokenIds" :key="id">
             <div class="columns">
               <div class="column is-6">
-                <p v-html="svgContent[index]"></p>
+                <img :src="tokenUrl(id)" @click="zoomIn(id)" />
               </div>
               <div class="column">
                 <div class="align-left">
@@ -67,7 +67,6 @@ export default {
     loading: null,
     txhash: "",
     isCheckingTx: false,
-    svgContent: [],
     myTokenIds: [],
     nftImage: "",
     isImageModalActive: false,
@@ -79,9 +78,6 @@ export default {
         return;
       }
       this.myTokenIds = await this.getTokenIds(this.account);
-      this.svgContent = await Promise.all(
-        this.myTokenIds.map((i) => this.fetchContent(i))
-      );
     },
     async claim() {
       try {
@@ -130,12 +126,7 @@ export default {
       this.isImageModalActive = true;
     },
     tokenUrl(id) {
-      return `https://web3q.io/${this.chainConfig.nft}:w3q-g/compose/${id}`;
-    },
-    async fetchContent(id) {
-      const r = await fetch(this.tokenUrl(id));
-      const c = await r.text();
-      return c;
+      return `https://web3q.io/${this.chainConfig.nft}:w3q-g/compose/string!${id}.svg`;
     },
     nftLink(id) {
       return `${this.chainConfig.scan}token/${this.chainConfig.nft}/instance/${id}`;
