@@ -2,30 +2,40 @@
   <div class="container body">
     <div class="middle">
       <div class="card-wrapper">
-        <div class="box">
-          <div class="last-panel" v-for="id in myTokenIds" :key="id">
-            <div class="columns">
-              <div class="column is-6">
-                <img :src="tokenUrl(id)" @click="zoomIn(id)" />
-              </div>
-              <div class="column">
-                <div class="align-left">
-                  <p class="tag">Demo</p>
-                  <p class="title">Web3Q Early Supporter # {{ id }}</p>
-                  <p class="header">
-                    Owned by
-                    <a :href="nftLink(id)" target="_blank">{{
-                      accountShort
-                    }}</a>
-                  </p>
-                  <p class="text"></p>
-                </div>
-              </div>
-            </div>
+        <div class="last-panel">
+          <img src="../assets/demo.png" />
+          <div class="pad"></div>
+          <div class="title">Web3 QRobot</div>
+          <p class="text">
+            Web3 QRobot is a collection of cute robots that can be minted freely
+            on Web3Q blockchain. All the metadata has been uploaded to Web3Q in
+            advance, and the traits of the robot will be fully determined by an
+            on-chain random number generated when you mint. Enjoy your cute
+            robots, Cheers!
+          </p>
+          <div class="btn-wrapper">
+            <button @click="claim" class="btn-app">Mint</button>
           </div>
-          <div class="last-panel">
-            <div class="btn-wrapper">
-              <button @click="claim" class="btn-app">Mint</button>
+        </div>
+      </div>
+      <div class="card-wrapper">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">Minted</p>
+          </header>
+          <div class="last-panel" v-if="myTokenIds == []">
+            You don't own any QRobot yet
+          </div>
+          <div class="last-panel" v-else>
+            <div
+              class="columns"
+              v-for="(group, index) in groups"
+              :key="index"
+            >
+              <div class="column is-4" v-for="id in group" :key="id">
+                <img :src="tokenUrl(id)" @click="zoomIn(id)" />
+                <p class="heading">QRobot #{{ id }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -149,6 +159,20 @@ export default {
       }
       return "";
     },
+    groups() {
+      const len = this.myTokenIds.length / 3;
+      const arr = [];
+      for (let i = 0; i < len; i++) {
+        arr[i] = [];
+        for (let j = 0; j < 3; j++) {
+          if (i * 3 + j < this.myTokenIds.length) {
+            arr[i][j] = this.myTokenIds[i * 3 + j];
+          }
+        }
+      }
+      console.log("groups", arr);
+      return arr;
+    },
   },
   watch: {
     async account(newValue) {
@@ -173,9 +197,9 @@ export default {
 
 <style lang="scss" scoped>
 $res: 780px;
-.box {
+.card {
   background: #ffffff;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   border: 1px solid #e9f1f2;
 }
 .top {
@@ -200,7 +224,7 @@ $res: 780px;
 .num {
   font-size: 1.7rem;
   font-family: AlibabaPuHuiTiB;
-  color: #ff9656;
+  color: #2b66ff;
   display: flex;
   align-items: center;
 }
@@ -232,7 +256,7 @@ a[target="_blank"] {
 .btn-wrapper button {
   border: 0;
   cursor: pointer;
-  min-width: 12rem;
+  min-width: 8rem;
 }
 button:disabled {
   color: #ffffff;
@@ -267,10 +291,7 @@ button:disabled {
   align-items: center;
 }
 .pad {
-  padding: 0.5rem 0.5rem 0 0.5rem;
-  margin-bottom: 0.5rem !important;
-  font-size: 1.1rem;
-  font-weight: normal;
+  margin: 2rem;
 }
 .mask {
   width: 46%;
@@ -296,15 +317,15 @@ button:disabled {
   font-size: 1.2rem;
   border: 1px solid #e8e6f2;
   font-family: AlibabaPuHuiTiB;
-  color: #ff9656;
+  color: #2b66ff;
 }
 .cancel {
-  color: #ff9656;
+  color: #2b66ff;
   background-color: #fff;
   border: 1px solid #e8e6f2;
 }
 .cancel:hover {
-  background-color: #ff9656;
+  background-color: #2b66ff;
   color: #fff;
 }
 .close {
@@ -367,7 +388,7 @@ button:disabled {
   cursor: pointer;
 }
 .point {
-  color: #ff9656;
+  color: #2b66ff;
 }
 .grid-wrapper {
   margin-top: 1rem;
@@ -423,7 +444,7 @@ button:disabled {
 //   border-radius: 2rem !important;
 // }
 .centered button:hover {
-  background: #ff9656;
+  background: #2b66ff;
   color: #ffffff !important;
 }
 .last-panel {
@@ -446,9 +467,9 @@ button:disabled {
   color: #ffffff !important;
   font-family: AlibabaPuHuiTiB !important;
 }
-.align-left .title {
+.title {
   font-family: AlibabaPuHuiTiR !important;
-  margin-bottom: 0.5rem !important;
+  margin-bottom: 0 !important;
 }
 .input {
   border-radius: 2rem !important;
@@ -478,11 +499,17 @@ button:disabled {
   text-align: left;
   padding-left: 1rem;
 }
-.align-left .text {
-  font-size: 1.1rem;
+.text {
+  width: 72%;
+  text-align: left;
   color: #000000;
+  font-size: 1.1rem;
   line-height: 2rem;
-  width: 33rem;
+  margin: auto;
+  padding: 1rem;
+  @media (max-width: $res) {
+    width: 60%;
+  }
 }
 .placeholder {
   background-color: #dddddd;
@@ -495,6 +522,6 @@ button:disabled {
   padding-top: 3rem;
 }
 .pcolor {
-  background-color: #ff9656 !important;
+  background-color: #2b66ff !important;
 }
 </style>

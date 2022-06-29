@@ -67,11 +67,9 @@ export default {
       return true;
     },
     handleChainChanged() {
-      console.log("handleChainChanged");
       window.location.reload();
     },
     async handleAccountsChanged(accounts) {
-      console.log("handleAccountsChanged, accounts", accounts);
       if (accounts.length === 0) {
         window.location.reload();
       }
@@ -80,8 +78,6 @@ export default {
       }
     },
     setChain(newChainId) {
-      console.log("eth_chainId", newChainId);
-      console.log("this.chainConfig", this.chainConfig.chainId);
       if (
         !(
           this.chainConfig &&
@@ -100,7 +96,6 @@ export default {
       return true;
     },
     sameChain(a, b) {
-      console.log("samechain", a, b);
       if (!a || !b) {
         return false;
       }
@@ -124,7 +119,6 @@ export default {
     async promptSwitch() {
       const [{ chainId, rpcUrls, scan }] = chains;
       try {
-        console.log("popup switch chain");
         // check if the chain to connect to is installed
         await window.ethereum.request({
           method: "wallet_switchEthereumChain",

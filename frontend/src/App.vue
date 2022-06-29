@@ -166,7 +166,7 @@ body {
   text-align: center;
   vertical-align: middle;
   display: table-cell;
-  background: #FF9656;
+  background: #2B66FF;
   color: #ffffff;
   font-size: 1rem;
   font-family: AlibabaPuHuiTiB;
@@ -176,12 +176,12 @@ body {
 }
 .btn-app:hover {
   background: #ffffff;
-  color: #FF9656;
+  color: #2B66FF;
   border: 1px solid #e8e6f2;
   cursor: pointer;
 }
 .notification.is-info {
-  background-color: #FF9656 !important;
+  background-color: #2B66FF !important;
 }
 .container:not(.is-max-desktop):not(.is-max-widescreen) {
   max-width: 1000px !important;
