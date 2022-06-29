@@ -18,7 +18,6 @@ contract ComposableNFT is ERC721Enumerable {
     mapping(string => uint256) tokenIdIndex;
     uint256 traitSize;
     uint256 valueSize;
-    uint256 sampleSpace;
 
     constructor(
         string memory name,
@@ -30,12 +29,10 @@ contract ComposableNFT is ERC721Enumerable {
         sourceDir = _sourceDir;
         traitSize = _traitSize;
         valueSize = _valueSize;
-        sampleSpace = traitSize**valueSize;
     }
 
-    function mint() public returns (uint256) {
+    function mintTo(address receiver) public virtual returns (uint256) {
         uint256 newItemId = _tokenIds.current();
-        address receiver = msg.sender;
         _mint(receiver, newItemId);
         uint256 composeId = genId(receiver, newItemId);
         composeIdUsed[composeId] = true;
@@ -43,15 +40,24 @@ contract ComposableNFT is ERC721Enumerable {
         _tokenIds.increment();
         return newItemId;
     }
-    
-    function compose(string memory tokenIdSvg) public view returns (bytes memory) {
+
+    function compose(string memory tokenIdSvg)
+        public
+        view
+        returns (bytes memory)
+    {
+        require(bytes(tokenIdSvg).length > 4, "invalid token ID");
         string memory tokenId = trimSuffix(tokenIdSvg);
         return _compose(tokenId);
     }
 
-    function _compose(string memory tokenId) internal view returns (bytes memory) {
+    function _compose(string memory tokenId)
+        internal
+        view
+        returns (bytes memory)
+    {
         uint256 composeId = tokenIdIndex[tokenId];
-        require(composeId > 0, "invalid token ID");
+        require(composeId > 0, "not minted");
         IW3RC3 w3q = IW3RC3(sourceDir);
         bytes memory images = bytes("");
         for (uint256 i = 0; i < traitSize; i++) {
@@ -74,12 +80,12 @@ contract ComposableNFT is ERC721Enumerable {
                 '"/>'
             );
         }
-        bytes memory svg = abi.encodePacked(
-            '<svg viewBox="0 0 200 200" style="background-color:yellow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">',
-            images,
-            "</svg>"
-        );
-        return svg;
+        return
+            abi.encodePacked(
+                '<svg viewBox="0 0 200 200" style="background-color:yellow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">',
+                images,
+                "</svg>"
+            );
     }
 
     function genId(address receiver, uint256 itemId)
@@ -87,6 +93,7 @@ contract ComposableNFT is ERC721Enumerable {
         view
         returns (uint256)
     {
+        uint256 sampleSpace = traitSize**valueSize;
         uint256 randNonce = 0;
         uint256 composeId = uint256(
             keccak256(
@@ -111,11 +118,15 @@ contract ComposableNFT is ERC721Enumerable {
         return composeId;
     }
 
-    function trimSuffix(string memory tokenIdSvg) public pure returns (string memory) {
-        bytes memory srcBytes = bytes(tokenIdSvg);
+    function trimSuffix(string memory fileName)
+        public
+        pure
+        returns (string memory)
+    {
+        bytes memory srcBytes = bytes(fileName);
         uint256 endIndex = srcBytes.length - 4;
         bytes memory idBytes = new bytes(endIndex);
-        for(uint256 i = 0; i < endIndex; i++) {
+        for (uint256 i = 0; i < endIndex; i++) {
             idBytes[i] = srcBytes[i];
         }
         return string(idBytes);

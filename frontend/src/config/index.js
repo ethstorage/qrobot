@@ -2,7 +2,7 @@ const chains = [
   {
     chainId: '0xD06',
     scan: 'https://explorer.galileo.web3q.io/',
-    nft: "0x855f0369B9721061ec8Ce66aE6Eb02E92442663b",
+    nft: "0xF3f3AF52Fa102F4f27075ab4EF45AC88ca088C37",
   }
 ];
 

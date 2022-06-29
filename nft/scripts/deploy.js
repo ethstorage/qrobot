@@ -9,16 +9,17 @@ async function main() {
 
     let tx, receipt;
     //deploy contract
-    const nft = await ethers.getContractFactory("ComposableNFT");
-    const myNFT = await nft.deploy("Web3Q Early Supporter", "WES", pngDir, 7, 10);
+    const nft = await ethers.getContractFactory("DemoPFP");
+    const myNFT = await nft.deploy(pngDir);
     await myNFT.deployed();
-    console.log("ComposableNFT deployed to:", myNFT.address);
+    console.log("DemoNFT deployed to:", myNFT.address);
 
     // mint #0 for test
     const gas = await myNFT.estimateGas.mint();
     tx = await myNFT.mint({ gasLimit: gas });
     receipt = await tx.wait();
     console.log("mint", receipt.status);
+    console.log(await myNFT.compose("0.svg"));
 }
 
 
@@ -39,7 +40,7 @@ async function test() {
     console.log(rs)
 }
 
-test()
+main()
     .then(() => process.exit(0))
     .catch((error) => {
         console.error(error);
