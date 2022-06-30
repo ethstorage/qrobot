@@ -60,13 +60,12 @@ contract ComposableNFT is ERC721Enumerable {
         require(composeId > 0, "not minted");
         IW3RC3 w3q = IW3RC3(sourceDir);
         bytes memory images = bytes("");
-        for (uint256 i = 0; i < traitSize; i++) {
-            composeId /= valueSize;
-            uint256 prop = composeId % valueSize;
+        for (uint256 trait = 0; trait < traitSize; trait++) {
+            uint256 value = composeId % valueSize;
             bytes memory pngFileName = abi.encodePacked(
-                i.toString(),
+                trait.toString(),
                 "/",
-                prop.toString(),
+                value.toString(),
                 ".png"
             );
             (bytes memory png, ) = w3q.read(pngFileName);
@@ -76,6 +75,7 @@ contract ComposableNFT is ERC721Enumerable {
                 Base64.encode(png),
                 '"/>'
             );
+            composeId /= valueSize;
         }
         return
             abi.encodePacked(
