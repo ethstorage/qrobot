@@ -7,7 +7,9 @@ export const contract = {
     }),
     methods: {
         async mint() {
-            const tx = await this.nftContract.connect(this.provider.getSigner()).mint();
+            const theContract = this.nftContract.connect(this.provider.getSigner());
+            const gas = await theContract.estimateGas.mint();
+            const tx = await theContract.mint({ gasLimit: gas, gasPrice: 75000000000 });
             // const receipt = await tx.wait();
             return tx;
             // if (receipt.status == 1) {
