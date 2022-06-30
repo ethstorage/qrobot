@@ -57,7 +57,6 @@ contract ComposableNFT is ERC721Enumerable {
         returns (bytes memory)
     {
         uint256 composeId = tokenIdIndex[tokenId];
-        require(composeId > 0, "not minted");
         IW3RC3 w3q = IW3RC3(sourceDir);
         bytes memory images = bytes("");
         for (uint256 trait = 0; trait < traitSize; trait++) {
@@ -90,7 +89,7 @@ contract ComposableNFT is ERC721Enumerable {
         view
         returns (uint256)
     {
-        uint256 sampleSpace = traitSize**valueSize;
+        uint256 sampleSpace = valueSize**traitSize;
         uint256 randNonce = 0;
         uint256 composeId = uint256(
             keccak256(

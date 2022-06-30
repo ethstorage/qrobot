@@ -9,7 +9,7 @@ async function main() {
 
     let tx, receipt;
     //deploy contract
-    const nft = await ethers.getContractFactory("DemoPFP");
+    const nft = await ethers.getContractFactory("QRobot");
     const myNFT = await nft.deploy(pngDir);
     await myNFT.deployed();
 
@@ -25,7 +25,7 @@ async function main() {
 
 async function mint() {
     const [deployer] = await ethers.getSigners();
-    const nft = await ethers.getContractFactory("DemoPFP");
+    const nft = await ethers.getContractFactory("QRobot");
     const myNFT = nft.attach("0xbe9e69DE9D41f95b54fdfFE888ccb9cc00c14951"); //attach to a deployed NFT contract
     const gas = await myNFT.connect(deployer).estimateGas.mint();
     const tx = await myNFT.connect(deployer).mint({ gasLimit: gas });
@@ -34,7 +34,7 @@ async function mint() {
 }
 
 async function test() {
-    const nft = await ethers.getContractFactory("DemoPFP");
+    const nft = await ethers.getContractFactory("QRobot");
     const myNFT = nft.attach("0x855f0369B9721061ec8Ce66aE6Eb02E92442663b"); //attach to a deployed NFT contract
     let rs = await myNFT.compose("0.svg");
     console.log(rs)

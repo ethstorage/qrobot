@@ -3,9 +3,9 @@ pragma solidity ^0.8.13;
 
 import "./ComposableNFT.sol";
 
-contract DemoPFP is ComposableNFT {
+contract QRobot is ComposableNFT {
     constructor(address _sourceDir)
-        ComposableNFT("Web3 QRobot", "QRobot", _sourceDir, 10, 7)
+        ComposableNFT("Web3 QRobot", "QRobot", _sourceDir, 7, 10)
     {}
 
     function mint() public returns (uint256) {
