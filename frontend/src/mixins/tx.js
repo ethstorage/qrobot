@@ -51,7 +51,7 @@ export const transaction = {
     alert(content, type, duration) {
       this.$buefy.notification.open({
         duration: duration || 5000,
-        hasIcon: true,
+        hasIcon: false,
         queue: false,
         message: content,
         position: 'is-bottom-right',

@@ -2,8 +2,8 @@
   <div id="app">
     <w3q-tip
       style="width: 100vw"
-      bgColor="#2B66FF"
-      fontColor="#ffffff"
+      bgColor="#FFC124"
+      fontColor="#000000"
       :fontSize="isMobile ? '12px' : '15px'"
     />
     <div class="container">
@@ -89,6 +89,10 @@ export default {
   font-family: AlibabaPuHuiTiB;
   src: url("./assets/fonts/AlibabaSans-Bold.otf");
 }
+@font-face {
+  font-family: ComicSansMS;
+  src: url("./assets/fonts/Comic-Sans-MS.ttf");
+}
 $res: 780px;
 $input-radius: 2rem;
 html,
@@ -166,7 +170,7 @@ body {
   text-align: center;
   vertical-align: middle;
   display: table-cell;
-  background: #2B66FF;
+  background: #FFC124;
   color: #ffffff;
   font-size: 1rem;
   font-family: AlibabaPuHuiTiB;
@@ -176,12 +180,12 @@ body {
 }
 .btn-app:hover {
   background: #ffffff;
-  color: #2B66FF;
+  color: #FFC124;
   border: 1px solid #e8e6f2;
   cursor: pointer;
 }
 .notification.is-info {
-  background-color: #2B66FF !important;
+  background-color: #FFC124 !important;
 }
 .container:not(.is-max-desktop):not(.is-max-widescreen) {
   max-width: 1000px !important;

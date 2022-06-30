@@ -5,5 +5,5 @@ module.exports = {
     pluginOptions: {
     },
     productionSourceMap: false,
-    publicPath: '/nftdemo.w3q/',
+    publicPath: '/qrobot.w3q/',
 };

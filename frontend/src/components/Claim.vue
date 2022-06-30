@@ -5,10 +5,9 @@
         <div class="last-panel">
           <img src="../assets/demo.png" />
           <div class="pad"></div>
-          <div class="title">Web3 QRobot</div>
           <p class="text">
             Web3 QRobot is a collection of cute robots that can be minted freely
-            on Web3Q blockchain. All the metadata has been uploaded to Web3Q in
+            on Web3Q blockchain. All the <a :href="metaLink" target="_blank" >metadata</a> has been uploaded to Web3Q in
             advance, and the traits of the robot will be fully determined by an
             on-chain random number generated when you mint. Enjoy your cute
             robots, Cheers!
@@ -23,13 +22,13 @@
           <header class="card-header">
             <p class="card-header-title">Minted</p>
           </header>
-          <div class="last-panel" v-if="myTokenIds.length === 0">
+          <div class="last-panel centered" v-if="myTokenIds.length === 0">
             You don't own any QRobot yet
           </div>
           <div class="last-panel" v-else>
             <div class="columns" v-for="(group, index) in groups" :key="index">
               <div class="column is-4" v-for="id in group" :key="id">
-                <img :src="tokenUrl(id)" @click="zoomIn(id)" />
+                <a :href="tokenUrl(id)" target="_blank"> <img :src="tokenUrl(id)" /> </a>
                 <p class="heading">QRobot #{{ id }}</p>
               </div>
             </div>
@@ -133,9 +132,6 @@ export default {
     tokenUrl(id) {
       return `https://web3q.io/${this.chainConfig.nft}:w3q-g/compose/string!${id}.svg`;
     },
-    nftLink(id) {
-      return `${this.chainConfig.scan}token/${this.chainConfig.nft}/instance/${id}`;
-    },
   },
   computed: {
     ...mapState(["account", "chainConfig"]),
@@ -167,6 +163,9 @@ export default {
       }
       return arr;
     },
+    metaLink() {
+      return `https://web3q.io/0x31bc4dAd21fAd6212082C7953379bb62187ffE94:w3q-g/2/0.png`;
+    }
   },
   watch: {
     async account(newValue) {
@@ -218,7 +217,7 @@ $res: 780px;
 .num {
   font-size: 1.7rem;
   font-family: AlibabaPuHuiTiB;
-  color: #2b66ff;
+  color: #FFC124;
   display: flex;
   align-items: center;
 }
@@ -311,15 +310,15 @@ button:disabled {
   font-size: 1.2rem;
   border: 1px solid #e8e6f2;
   font-family: AlibabaPuHuiTiB;
-  color: #2b66ff;
+  color: #FFC124;
 }
 .cancel {
-  color: #2b66ff;
+  color: #FFC124;
   background-color: #fff;
   border: 1px solid #e8e6f2;
 }
 .cancel:hover {
-  background-color: #2b66ff;
+  background-color: #FFC124;
   color: #fff;
 }
 .close {
@@ -382,7 +381,7 @@ button:disabled {
   cursor: pointer;
 }
 .point {
-  color: #2b66ff;
+  color: #FFC124;
 }
 .grid-wrapper {
   margin-top: 1rem;
@@ -415,16 +414,7 @@ button:disabled {
   }
 }
 .centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
-  // font-size: 48px;
-  font-family: AlibabaPuHuiTiM;
-  color: #ffffff;
-  line-height: 4rem;
-  text-align: right;
+  padding-top: 5rem !important;
 }
 .centered button {
   font-size: 16px;
@@ -434,11 +424,8 @@ button:disabled {
   border-radius: 2rem;
   border: 0;
 }
-// input.input {
-//   border-radius: 2rem !important;
-// }
 .centered button:hover {
-  background: #2b66ff;
+  background: #FFC124;
   color: #ffffff !important;
 }
 .last-panel {
@@ -495,7 +482,8 @@ button:disabled {
 }
 .text {
   width: 72%;
-  text-align: left;
+  text-align: justify;
+  font-family: ComicSansMS;
   color: #000000;
   font-size: 1.1rem;
   line-height: 2rem;
@@ -516,6 +504,6 @@ button:disabled {
   padding-top: 3rem;
 }
 .pcolor {
-  background-color: #2b66ff !important;
+  background-color: #FFC124 !important;
 }
 </style>
