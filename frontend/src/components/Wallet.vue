@@ -193,7 +193,7 @@ export default {
   margin: 10px;
   padding-top: 3px;
   border-radius: 4px;
-  border: 1px solid #00a5ff;
+  border: 1px solid #FFC124;
   @media (max-width: 420px) {
     min-width: 96px;
     height: 26px;
@@ -207,7 +207,7 @@ export default {
   height: 16px;
   font-size: 14px;
   font-family: AlibabaPuHuiTiR;
-  color: #00a5ff !important;
+  color: #FFC124 !important;
   line-height: 16px;
 }
 </style>
