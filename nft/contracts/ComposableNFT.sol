@@ -72,17 +72,14 @@ contract ComposableNFT is ERC721Enumerable {
             (bytes memory png, ) = w3q.read(pngFileName);
             images = abi.encodePacked(
                 images,
-                '<image x="100" ',
-                'y="',
-                (i * 25).toString(),
-                '" xlink:href="data:image/png;base64,',
+                '<image xlink:href="data:image/png;base64,',
                 Base64.encode(png),
                 '"/>'
             );
         }
         return
             abi.encodePacked(
-                '<svg viewBox="0 0 200 200" style="background-color:yellow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">',
+                '<svg viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">',
                 images,
                 "</svg>"
             );

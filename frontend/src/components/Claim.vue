@@ -23,15 +23,11 @@
           <header class="card-header">
             <p class="card-header-title">Minted</p>
           </header>
-          <div class="last-panel" v-if="myTokenIds == []">
+          <div class="last-panel" v-if="myTokenIds.length === 0">
             You don't own any QRobot yet
           </div>
           <div class="last-panel" v-else>
-            <div
-              class="columns"
-              v-for="(group, index) in groups"
-              :key="index"
-            >
+            <div class="columns" v-for="(group, index) in groups" :key="index">
               <div class="column is-4" v-for="id in group" :key="id">
                 <img :src="tokenUrl(id)" @click="zoomIn(id)" />
                 <p class="heading">QRobot #{{ id }}</p>
@@ -125,7 +121,6 @@ export default {
       this.txhash = "";
     },
     async cancelCheck() {
-      console.log("cancel check");
       if (this.timer) {
         clearTimeout(this.timer);
       }
@@ -170,7 +165,6 @@ export default {
           }
         }
       }
-      console.log("groups", arr);
       return arr;
     },
   },
@@ -185,7 +179,7 @@ export default {
   },
   async created() {
     await this.fetchData();
-    // this.loadInterval = setInterval(() => this.fetchData(), 2000);
+    this.loadInterval = setInterval(() => this.fetchData(), 3000);
   },
   destroyed() {
     if (this.loadInterval) {

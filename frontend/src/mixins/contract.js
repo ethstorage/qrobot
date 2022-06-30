@@ -24,7 +24,6 @@ export const contract = {
                 promises.push(this.nftContract.tokenOfOwnerByIndex(addr, i));
             }
             const tokenIds = await Promise.all(promises);
-            console.log("tokenIds", tokenIds)
             return tokenIds.map(t => t.toNumber());
         },
         async init() {

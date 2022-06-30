@@ -5,7 +5,7 @@ import "./ComposableNFT.sol";
 
 contract DemoPFP is ComposableNFT {
     constructor(address _sourceDir)
-        ComposableNFT("Demo PFP", "PFP", _sourceDir, 10, 7)
+        ComposableNFT("Web3 QRobot", "QRobot", _sourceDir, 10, 7)
     {}
 
     function mint() public returns (uint256) {
