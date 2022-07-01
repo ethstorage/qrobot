@@ -452,8 +452,8 @@ button:disabled {
 }
 .placeholder {
   background-position: center;
-  background-image: url("../assets/spinner.svg");
+  background-image: url("../assets/spinner.gif");
   background-repeat: no-repeat;
-  background-size: 20px 20px;
+  height: 293px;
 }
 </style>
