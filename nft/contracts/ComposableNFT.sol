@@ -14,7 +14,7 @@ contract ComposableNFT is ERC721Enumerable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     address private sourceDir;
-    mapping(uint256 => bool) composeIdUsed;
+    mapping(uint256 => uint256) composeIdBitmap;
     mapping(string => uint256) tokenIdIndex;
     uint256 traitSize;
     uint256 valueSize;
@@ -35,7 +35,7 @@ contract ComposableNFT is ERC721Enumerable {
         uint256 newItemId = _tokenIds.current();
         _mint(receiver, newItemId);
         uint256 composeId = genId(receiver, newItemId);
-        composeIdUsed[composeId] = true;
+        setComposeIdUsed(composeId);
         tokenIdIndex[newItemId.toString()] = composeId;
         _tokenIds.increment();
         return newItemId;
@@ -96,7 +96,7 @@ contract ComposableNFT is ERC721Enumerable {
                 abi.encodePacked(block.timestamp, receiver, itemId, randNonce)
             )
         ) % sampleSpace;
-        while (composeIdUsed[composeId]) {
+        while (isComposeIdUsed(composeId)) {
             randNonce++;
             composeId =
                 uint256(
@@ -126,5 +126,21 @@ contract ComposableNFT is ERC721Enumerable {
             idBytes[i] = srcBytes[i];
         }
         return string(idBytes);
+    }
+
+    function isComposeIdUsed(uint256 id) private view returns (bool) {
+        uint256 wordIndex = id / 256;
+        uint256 bitIndex = id % 256;
+        uint256 word = composeIdBitmap[wordIndex];
+        uint256 mask = (1 << bitIndex);
+        return word & mask == mask;
+    }
+
+    function setComposeIdUsed(uint256 id) private {
+        uint256 wordIndex = id / 256;
+        uint256 bitIndex = id % 256;
+        composeIdBitmap[wordIndex] =
+            composeIdBitmap[wordIndex] |
+            (1 << bitIndex);
     }
 }
