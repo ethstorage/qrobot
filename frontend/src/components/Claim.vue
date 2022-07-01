@@ -7,10 +7,11 @@
           <div class="pad"></div>
           <p class="text">
             Web3 QRobot is a collection of cute robots that can be minted freely
-            on Web3Q blockchain. All the <a :href="metaLink" target="_blank" >metadata</a> has been uploaded to Web3Q in
-            advance, and the traits of the robot will be fully determined by an
-            on-chain random number generated when you mint. Enjoy your cute
-            robots, Cheers!
+            on Web3Q blockchain. All the
+            <a :href="metaLink" target="_blank">metadata</a> has been uploaded
+            to Web3Q in advance, and the traits of the robot will be fully
+            determined by an on-chain random number generated when you mint.
+            Enjoy your cute robots, Cheers!
           </p>
           <div class="btn-wrapper">
             <button @click="claim" class="btn-app">Mint</button>
@@ -28,7 +29,11 @@
           <div class="last-panel" v-else>
             <div class="columns" v-for="(group, index) in groups" :key="index">
               <div class="column is-4" v-for="id in group" :key="id">
-                <a :href="tokenUrl(id)" target="_blank"> <img :src="tokenUrl(id)" /> </a>
+                <div class="placeholder">
+                  <a :href="tokenUrl(id)" target="_blank">
+                    <img :src="tokenUrl(id)" />
+                  </a>
+                </div>
                 <p class="heading">QRobot #{{ id }}</p>
               </div>
             </div>
@@ -165,7 +170,7 @@ export default {
     },
     metaLink() {
       return `https://web3q.io/0x31bc4dAd21fAd6212082C7953379bb62187ffE94:w3q-g/2/0.png`;
-    }
+    },
   },
   watch: {
     async account(newValue) {
@@ -195,56 +200,12 @@ $res: 780px;
   border-radius: 0.75rem;
   border: 1px solid #e9f1f2;
 }
-.top {
-  font-family: AlibabaPuHuiTiM;
-  color: #000000;
-  text-align: center;
-  width: 100%;
-}
-.top img {
-  vertical-align: middle;
-  max-height: 1.5rem;
-}
-.top span {
-  padding-left: 10px;
-}
-.key {
-  font-family: AlibabaPuHuiTiB;
-  color: #666666;
-  line-height: 18px;
-  padding: 0 1rem 0.5rem 0;
-}
-.num {
-  font-size: 1.7rem;
-  font-family: AlibabaPuHuiTiB;
-  color: #FFC124;
-  display: flex;
-  align-items: center;
-}
-.grey {
-  color: #999999;
-}
 a[target="_blank"] {
   color: #2a77fe;
 }
 .buttons {
   justify-content: space-evenly !important;
   padding: 20px 0;
-}
-.num img {
-  max-height: 1.5rem;
-  margin-left: 1rem;
-}
-.level {
-  @media (max-width: $res) {
-    text-align: center;
-  }
-}
-.level img {
-  max-width: 3rem;
-}
-.level span {
-  padding-left: 10px;
 }
 .btn-wrapper button {
   border: 0;
@@ -310,15 +271,15 @@ button:disabled {
   font-size: 1.2rem;
   border: 1px solid #e8e6f2;
   font-family: AlibabaPuHuiTiB;
-  color: #FFC124;
+  color: #ffc124;
 }
 .cancel {
-  color: #FFC124;
+  color: #ffc124;
   background-color: #fff;
   border: 1px solid #e8e6f2;
 }
 .cancel:hover {
-  background-color: #FFC124;
+  background-color: #ffc124;
   color: #fff;
 }
 .close {
@@ -381,7 +342,7 @@ button:disabled {
   cursor: pointer;
 }
 .point {
-  color: #FFC124;
+  color: #ffc124;
 }
 .grid-wrapper {
   margin-top: 1rem;
@@ -425,7 +386,7 @@ button:disabled {
   border: 0;
 }
 .centered button:hover {
-  background: #FFC124;
+  background: #ffc124;
   color: #ffffff !important;
 }
 .last-panel {
@@ -436,8 +397,7 @@ button:disabled {
   min-height: 12rem;
 }
 .last-panel img {
-  border-radius: 1rem;
-  cursor: pointer;
+  border-radius: 1rem !important;
 }
 .last-panel .btn-wrapper {
   margin: 1rem;
@@ -465,13 +425,6 @@ button:disabled {
   padding-left: 4rem;
   padding-right: 4rem;
 }
-.bbutton {
-  margin-left: -4.5rem;
-  width: 5rem;
-}
-.bbutton[disabled] {
-  opacity: 1 !important;
-}
 .disabled {
   filter: grayscale(100%);
   pointer-events: none;
@@ -493,17 +446,15 @@ button:disabled {
     width: 60%;
   }
 }
-.placeholder {
-  background-color: #dddddd;
-}
-.bigger {
-  font-size: 2rem;
-}
 .card-img {
   min-height: 6rem;
   padding-top: 3rem;
 }
-.pcolor {
-  background-color: #FFC124 !important;
+.placeholder {
+  background-position: center;
+  background-image: url("../assets/spinner.svg");
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  height: 100%;
 }
 </style>
