@@ -455,6 +455,5 @@ button:disabled {
   background-image: url("../assets/spinner.svg");
   background-repeat: no-repeat;
   background-size: 20px 20px;
-  height: 100%;
 }
 </style>
