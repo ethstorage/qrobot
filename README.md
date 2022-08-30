@@ -38,7 +38,7 @@ The seeds will then be stored on-chain in the mapping from token ID to seed.
 Now the minted composable NFT is accessible by its unique token ID following [EIP-4804](https://eips.ethereum.org/EIPS/eip-4804) standard.
 Simply put, this standard translates URI to contract read such that Web3 content can be accessed easily, such as from a browser's address bar.  
 
-When you request the URI, the NFT contract is located and the `compose` method will retrieve the seed by token ID and cut it into a series of file indexes presenting the NFT's unique rarities. The output is an SVG string concatenating a selection of grouped png files read by Web3Q.
+When you request the URI, the NFT contract is located and the `compose` method will retrieve the seed by token ID and cut it into a series of metadata indexes presenting the NFT's traits. The output is an SVG string concatenating a selection of grouped png files read by Web3Q.
 
 ```javascript
 uint256 composeId = tokenIdIndex[tokenId];
@@ -72,7 +72,7 @@ return
 By the way, the metadata also can be accessed directly with an EIP-4804 standard URI, e.g., https://web3q.io/0x31bc4dAd21fAd6212082C7953379bb62187ffE94:w3q-g/2/0.png.
 ## The Benefits of Composable NFT
 
-First of all, the minting and presenting processes of composable NFT fully happen on-chain, as well as the location of metadata, is transparent to everyone. This prevents the situation where the NFT blind box issuer can theoretically change the random number or the URI of metadata behind the scene to turn your rare item into a common one.
+First of all, the minting and presenting processes of composable NFT fully happen on-chain, as well as the location of metadata, is transparent to everyone. This prevents the situation where the NFT blind box issuer can theoretically change the URI of metadata behind the scene to turn your rare item into a common one.
 
 Secondly, the composable NFT saves the artist a lot of effort to design the same amount of artwork compared to traditional NFTs. For example, the artist of QRobot only needs to design $10\times7$ pieces of component pngs and the composable NFT contract can generate up to $10^{7}$ NFTs as a collection. 
 
