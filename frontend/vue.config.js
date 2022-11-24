@@ -5,5 +5,4 @@ module.exports = {
     pluginOptions: {
     },
     productionSourceMap: false,
-    publicPath: '/qrobot.w3q/',
 };
