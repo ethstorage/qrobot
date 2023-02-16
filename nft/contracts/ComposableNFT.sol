@@ -4,9 +4,21 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 interface IW3RC3 {
     function read(bytes memory name) external view returns (bytes memory, bool);
+}
+
+interface IWearable {
+    function ownerOf(uint256 tokenId) external view returns (address);
+    function metadatas(uint256 tokenId) external view returns  (uint256, uint256);
+    function transferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) external;
 }
 
 contract ComposableNFT is ERC721Enumerable {
@@ -18,17 +30,20 @@ contract ComposableNFT is ERC721Enumerable {
     mapping(string => uint256) tokenIdIndex;
     uint256 traitSize;
     uint256 valueSize;
+    IWearable wearable;
 
     constructor(
         string memory name,
         string memory symbol,
         address _sourceDir,
         uint256 _traitSize,
-        uint256 _valueSize
+        uint256 _valueSize,
+        IWearable _wearable
     ) ERC721(name, symbol) {
         sourceDir = _sourceDir;
         traitSize = _traitSize;
         valueSize = _valueSize;
+        wearable = _wearable;
     }
 
     function mintTo(address receiver) public virtual returns (uint256) {
@@ -49,6 +64,30 @@ contract ComposableNFT is ERC721Enumerable {
         require(bytes(tokenIdSvg).length > 4, "invalid token ID");
         string memory tokenId = trimSuffix(tokenIdSvg);
         return _compose(tokenId);
+    }
+
+    function wear(uint256 tokenId, uint256 wearableTokenId) public {
+        require(this.ownerOf(tokenId) == msg.sender, "sender must be token owner");
+        if (wearable.ownerOf(wearableTokenId) != address(this)) {
+            wearable.transferFrom(msg.sender, address(this), wearableTokenId);
+        }
+
+        uint256 composeId = tokenIdIndex[Strings.toString(tokenId)];
+        uint256 newComposeId = 0;
+        uint256 times = 1;
+        (uint256 traitId, uint256 valueId) = wearable.metadatas(wearableTokenId);
+        for (uint256 trait = 0; trait < traitSize; trait++) {
+            uint256 value = composeId % valueSize;
+            if (trait == traitId) {
+                newComposeId = newComposeId + valueId * times;
+            } else {
+                newComposeId = newComposeId + value * times;
+            }
+            times = times * 10;
+            composeId /= valueSize;
+        }
+
+        tokenIdIndex[Strings.toString(tokenId)] = newComposeId;
     }
 
     function _compose(string memory tokenId)
