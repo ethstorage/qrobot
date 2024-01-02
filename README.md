@@ -9,7 +9,7 @@ Everything is composed of something else, so can be an NFT.
 A robot is composed of a body, a hat, a mouth, a pair of arms, a pair of eyes, etc., and QRobot as a robot theme NFT is composed of corresponding parts in the form of png files (i.e. metadata).  
 
 <p align="center">
-<img src="https://web3q.io/0x804a6B66b071e7E6494AE0e03768a536ded64262:w3q-g/compose/string!8.svg" width="400" />
+<img src="https://0x804a6B66b071e7E6494AE0e03768a536ded64262.w3q-g.w3link.io/compose/string!8.svg" width="400" />
 </p>
 
 Generally speaking, a composable NFT is composed on demand by pre-deployed components based on a seed randomly generated on-chain when the NFT is minted. 
@@ -69,11 +69,11 @@ return
     );
 ```
 
-By the way, the metadata also can be accessed directly with an EIP-4804 standard URI, e.g., https://web3q.io/0x31bc4dAd21fAd6212082C7953379bb62187ffE94:w3q-g/2/0.png.
+By the way, the metadata also can be accessed directly with an EIP-4804 standard URI, e.g., https://0x31bc4dAd21fAd6212082C7953379bb62187ffE94.w3q-g.w3link.io/2/0.png.
 ## The Benefits of Composable NFT
 
-First of all, the minting and presenting processes of composable NFT fully happen on-chain, as well as the location of metadata, is transparent to everyone. This prevents the situation where the NFT blind box issuer can theoretically change the URI of metadata behind the scene to turn your rare item into a common one.
+First of all, the minting and presenting processes of composable NFT fully happen on-chain, as well as the location of metadata, is transparent to everyone. This prevents the situation where the NFT blind box issuer can theoretically change the URI of metadata behind the scenes to turn your rare item into a common one.
 
 Secondly, the composable NFT saves the artist a lot of effort to design the same amount of artwork compared to traditional NFTs. For example, the artist of QRobot only needs to design $10\times7$ pieces of component pngs and the composable NFT contract can generate up to $10^{7}$ NFTs as a collection. 
 
-Last but not least, since the NFTs are composed on demand, there is no need to store the generated pictures anywhere as static NFTs do, which saves the storage costs dramatically. 
+Last but not least, since the NFTs are composed on demand, there is no need to store the generated pictures anywhere as static NFTs do, which saves storage costs dramatically. 
