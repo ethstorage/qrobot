@@ -135,7 +135,7 @@ export default {
       this.isImageModalActive = true;
     },
     tokenUrl(id) {
-      return `https://web3q.io/${this.chainConfig.nft}:w3q-g/compose/string!${id}.svg`;
+      return `https://${this.chainConfig.nft}.3336.w3link.io/compose/string!${id}.svg`;
     },
   },
   computed: {
@@ -169,7 +169,7 @@ export default {
       return arr;
     },
     metaLink() {
-      return `https://web3q.io/0x31bc4dAd21fAd6212082C7953379bb62187ffE94:w3q-g/2/0.png`;
+      return `https://0x420930aff36ea0ac4c308ae2d17dd630cda3fa69.3336.w3link.io/2/0.png`;
     },
   },
   watch: {
