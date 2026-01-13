@@ -45,25 +45,33 @@ export default {
         );
         return null;
       }
-      const newChainId = await window.ethereum.request({
-        method: "eth_chainId",
-      });
-      if (!this.setChain(newChainId)) {
-        //unsupported chain
-        this.promptSwitch();
-      }
-      window.ethereum
-        .request({ method: "eth_requestAccounts" })
-        .then(this.handleAccountsChanged)
-        .catch((err) => {
-          if (err.code === 4001) {
-            // EIP-1193 userRejectedRequest error
-            // If this happens, the user rejected the connection request.
-            console.log("user rejected.");
-          } else {
-            console.error("eth_requestAccounts", err);
-          }
-        });
+			try {
+				await window.ethereum.request({
+					method: 'eth_requestAccounts',
+				});
+
+				// check
+				const newChainId = await window.ethereum.request({
+					method: "eth_chainId",
+				});
+				if (!this.setChain(newChainId)) {
+					//unsupported chain
+					await this.promptSwitch();
+				}
+
+				const accounts = await window.ethereum.request({
+					method: 'eth_accounts',
+				});
+				await this.handleAccountsChanged(accounts);
+			} catch (err) {
+				if (err.code === 4001) {
+					// EIP-1193 userRejectedRequest error
+					// If this happens, the user rejected the connection request.
+					console.log("user rejected.");
+				} else {
+					console.error("eth_requestAccounts", err);
+				}
+			}
       return true;
     },
     handleChainChanged() {
@@ -117,28 +125,22 @@ export default {
       return anum === bnum;
     },
     async promptSwitch() {
-      const [{ chainId, rpcUrls, scan }] = chains;
-      try {
-        // check if the chain to connect to is installed
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId }],
-        });
-      } catch (error) {
-        // This error code indicates that the chain has not been added to MetaMask
-        // if it is not, then install it into the user MetaMask
-        if (error.code === 4902) {
-          try {
-            await window.ethereum.request({
-              method: "wallet_addEthereumChain",
-              params: [{ chainId, rpcUrls, blockExplorerUrls: [scan] }],
-            });
-          } catch (addError) {
-            console.error("wallet_addEthereumChain failed", addError);
-          }
-        }
-        console.error("wallet_switchEthereumChain failed", error);
-      }
+			const [{ chainId, rpcUrls, scan }] = chains;
+			try {
+				// check if the chain to connect to is installed
+				await window.ethereum.request({
+					method: "wallet_switchEthereumChain",
+					params: [{ chainId: chainId }],
+				});
+			} catch (error) {
+				// This error code indicates that the chain has not been added to MetaMask
+				// if it is not, then install it into the user MetaMask
+				if (error.code === 4001) {
+					console.error(`Please switch to Sepolia network`);
+				} else {
+					console.error("wallet_switchEthereumChain failed", error);
+				}
+			}
     },
   },
 };

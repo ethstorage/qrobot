@@ -29,10 +29,9 @@
           <div class="last-panel" v-else>
             <div class="columns" v-for="(group, index) in groups" :key="index">
               <div class="column is-4" v-for="id in group" :key="id">
-                <div class="placeholder">
-                  <a :href="tokenUrl(id)" target="_blank">
-                    <img :src="tokenUrl(id)" />
-                  </a>
+								<div class="placeholder">
+									<object :data="tokenUrl(id)" type="image/svg+xml"/>
+									<a :href="tokenUrl(id)" target="_blank" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:10;"></a>
                 </div>
                 <p class="heading">QRobot #{{ id }}</p>
               </div>
@@ -65,10 +64,9 @@
   </div>
 </template>
 <script>
-import { BigNumber } from "ethers";
 import { mapState } from "vuex";
 import { transaction, contract } from "@/mixins";
-import { short, checkOps } from "@/utils";
+import { short } from "@/utils";
 
 export default {
   name: "Claim",
@@ -130,12 +128,8 @@ export default {
       }
       this.isCheckingTx = false;
     },
-    zoomIn(id) {
-      this.nftImage = this.tokenUrl(id);
-      this.isImageModalActive = true;
-    },
     tokenUrl(id) {
-      return `https://${this.chainConfig.nft}.3337.w3link.io/compose/string!${id}.svg`;
+      return `https://${this.chainConfig.nft}.11155111.w3link.io/compose/string!${id}.svg`;
     },
   },
   computed: {
@@ -169,7 +163,7 @@ export default {
       return arr;
     },
     metaLink() {
-      return `https://0xB3dc8D94a698278814B051Df3E78834C7C2E44f5.3337.w3link.io/2/0.png`;
+      return `https://0x2A845b1C73D0F938b0B8388C93d09de6aec99f5c.11155111.w3link.io/2/0.png`;
     },
   },
   watch: {
@@ -451,9 +445,15 @@ button:disabled {
   padding-top: 3rem;
 }
 .placeholder {
+	position: relative;
   background-position: center;
   background-image: url("../assets/spinner.gif");
   background-repeat: no-repeat;
   height: 293px;
+}
+.placeholder object {
+	display: block;
+	width: 100%;
+	height: 100%;
 }
 </style>
