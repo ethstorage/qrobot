@@ -69,7 +69,7 @@ import { transaction, contract } from "@/mixins";
 import { short } from "@/utils";
 
 export default {
-  name: "Claim",
+  name: "QRobotClaim",
   mixins: [transaction, contract],
   data: () => ({
     loading: null,

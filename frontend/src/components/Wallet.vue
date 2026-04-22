@@ -16,7 +16,7 @@ import { mapActions, mapState } from "vuex";
 import { short } from "@/utils";
 import chains from "@/config";
 export default {
-  name: "Wallet",
+  name: "QRobotWallet",
   props: {},
 
   data: () => ({
